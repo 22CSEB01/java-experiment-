@@ -1,4 +1,4 @@
-//passward management
+//password management
 import java.util.regex.*;
 class GFG {
     public static boolean
