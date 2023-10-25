@@ -75,3 +75,32 @@ class Thread3 extends Thread
     {
         sq.printNumbers(76,100)
 }
+//program 1
+public class TestThreadMany {
+    public static void main(String[] args) {
+        if (args.length != 1) {
+            System.out.println("Usage: java TestThreadMany <number_of_threads>");
+            return;
+        }
+
+        int n = Integer.parseInt(args[0]);
+
+        for (int i = 1; i <= n; i++) {
+            Thread thread = new Thread(new MyRunnable("Thread #" + i));
+            thread.start();
+        }
+    }
+
+    static class MyRunnable implements Runnable {
+        private String name;
+
+        public MyRunnable(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public void run() {
+            System.out.println("Hello, I am " + name);
+        }
+    }
+}
