@@ -1,0 +1,113 @@
+1.
+import javax.swing.*; 
+ import java.awt.*; 
+ import java.awt.event.ActionEvent; 
+ import java.awt.event.ActionListener; 
+  
+ public class MilesToKilometersConverter extends JFrame implements ActionListener { 
+     private JTextField milesTextField; 
+     private JLabel resultLabel; 
+  
+     public MilesToKilometersConverter() { 
+         setTitle("Miles to Kilometers Converter"); 
+         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+         setLayout(new FlowLayout()); 
+         JLabel milesLabel = new JLabel("Enter miles:"); 
+         milesTextField = new JTextField(10); 
+         JButton convertButton = new JButton("Convert!"); 
+         resultLabel = new JLabel(""); 
+         add(milesLabel); 
+         add(milesTextField); 
+         add(convertButton); 
+         add(resultLabel); 
+         convertButton.addActionListener(this); 
+         setSize(300, 150);        
+         setVisible(true); 
+     } 
+  
+     @Override 
+     public void actionPerformed(ActionEvent e) { 
+         
+         String milesText = milesTextField.getText(); 
+  
+         try { 
+             double miles = Double.parseDouble(milesText); 
+             double kilometers = miles * 1.609; 
+             resultLabel.setText(String.format("%.2f miles is equal to %.2f kilometers.", miles, kilometers)); 
+         } catch (NumberFormatException ex) { 
+             
+             resultLabel.setText("Please enter a valid number for miles."); 
+         } 
+     } 
+  
+     public static void main(String[] args) { 
+         SwingUtilities.invokeLater(() -> new MilesToKilometersConverter()); 
+     } 
+ } 
+  
+  
+ 2. 
+ import javax.swing.*; 
+ import javax.swing.event.ChangeEvent; 
+ import javax.swing.event.ChangeListener; 
+ import java.awt.*; 
+  
+ public class ColorPaletteViewer extends JFrame { 
+     private JSlider redSlider, greenSlider, blueSlider; 
+     private JPanel colorPanel; 
+  
+     public ColorPaletteViewer() { 
+         setTitle("Color Palette Viewer"); 
+         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+         setLayout(new BorderLayout()); 
+         redSlider = createSlider(128); 
+         greenSlider = createSlider(128); 
+         blueSlider = createSlider(128); 
+         colorPanel = new JPanel(); 
+         colorPanel.setPreferredSize(new Dimension(300, 300)); 
+         updateColor(); 
+  
+          
+         JPanel slidersPanel = new JPanel(new GridLayout(3, 1)); 
+         slidersPanel.add(redSlider); 
+         slidersPanel.add(greenSlider); 
+         slidersPanel.add(blueSlider); 
+  
+         add(slidersPanel, BorderLayout.WEST); 
+         add(colorPanel, BorderLayout.CENTER); 
+  
+          
+         pack(); 
+   
+         setVisible(true); 
+     } 
+  
+     private JSlider createSlider(int initialValue) { 
+         JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 255, initialValue); 
+         slider.setMajorTickSpacing(50); 
+         slider.setMinorTickSpacing(10); 
+         slider.setPaintTicks(true); 
+         slider.addChangeListener(new SliderChangeListener()); 
+         return slider; 
+     } 
+  
+     private void updateColor() { 
+         int red = redSlider.getValue(); 
+         int green = greenSlider.getValue(); 
+         int blue = blueSlider.getValue(); 
+  
+         Color color = new Color(red, green, blue); 
+         colorPanel.setBackground(color); 
+     } 
+  
+     private class SliderChangeListener implements ChangeListener { 
+         @Override 
+         public void stateChanged(ChangeEvent e) { 
+             updateColor(); 
+         } 
+     } 
+  
+     public static void main(String[] args) { 
+         SwingUtilities.invokeLater(ColorPaletteViewer::new); 
+     } 
+ }
